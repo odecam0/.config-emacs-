@@ -56,8 +56,8 @@
 
 (straight-use-package 'EXWM)
 (straight-use-package 'xelb)
-(load "exwm-config")
-; (find-fline "./exwm-config.el")
+(load "my-exwm-config")
+; (find-fline "./my-exwm-config.el")
 
 (straight-use-package 'tao-theme)
 (setq tao-theme-use-boxes nil)
@@ -72,6 +72,8 @@
 (eev-mode 1)
 (load "eev-custom/code-c-ds")
 (load "eev-custom/main")
+;; (find-fline "./eev-custom/code-c-ds.el")
+;; (find-fline "./eev-custom/main.el")
 
 (straight-use-package 'swiper)
 
