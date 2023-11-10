@@ -13,7 +13,11 @@
 	   "\\\"))))\" >> .dir-locals.el"))
   (let ((my-code-cd (ee-wrap-code-c-d name default-directory)))
     (ee-eval-string my-code-cd)
-    (kill-new my-code-cd)))
+    (kill-new my-code-cd))
+  (save-window-excursion
+    (find-eevcfile "code-c-ds.el" 0 '(goto-char (point-max)))
+    (evil-paste-after 1)
+    (save-buffer)))
 
 
 ;; Customizando o eejump mais facilmente
