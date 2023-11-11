@@ -39,6 +39,7 @@
   (defun eejump-2 () (mfdf))
 
   (defun eejump-106 () (set-frame-font "Iosevka  6" nil t))
+  (defun eejump-107 () (set-frame-font "Iosevka  7" nil t))
   (defun eejump-108 () (set-frame-font "Iosevka  8" nil t))
   (defun eejump-110 () (set-frame-font "Iosevka 10" nil t))
   (defun eejump-112 () (set-frame-font "Iosevka 12" nil t))

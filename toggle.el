@@ -1,3 +1,15 @@
+;; ( The idea with this one is this. There should be an abstract corpus of code
+;; ( that should implement the abstract idea of toggling a buffer or a functionality.
+
+;; ( When toggling something, first we check if there is a buffer with a given name
+;; ( if there is not, we call a given function that will create that buffer. This should
+;; ( be a function.
+
+;; ( Now, I also want a functionality that exchanges a buffer name into those of the kind
+;; ( Buffer Buffer<1> Buffer<2> ... etc. So that if I call a function on Buffer<1>, its name
+;; ( will be Buffer, and the buffer that formerly had the name Buffer will be called Buffer<1>
+;; ( Swap buffer names. 
+
 (winner-mode 1)
 ;; Função que vai ou cria buffer de navegador
 (defun toggle-chromium-buffer (arg) (interactive "P")
