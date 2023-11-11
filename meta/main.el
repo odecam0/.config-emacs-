@@ -47,6 +47,10 @@
   (dolist (f files)
     (shell-command (concat "git add " f))))
 
+(defun _mc-commit-with-message (message)
+  ()
+  (shell-command (concat "git commit -m \"" message "\"")))
+
 
 ;; (find-fline "./overlay-hide.el")
 

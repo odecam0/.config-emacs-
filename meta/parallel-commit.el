@@ -176,12 +176,16 @@
 	  (_mc-filter-list-of-files-by-file-extension
 	   (_mc-get-files-that-changed-since-commit
 	    (_mc-get-last-sync-meta-hash)))) ))
+    (_mc-write-meta-hash-to-sync-log-file)
+    (_mc-stage-files `(,(concat (_mc-get-git-root-dir) _mc-sync-log-file-name)))
+    (_mc-commit-with-message "Updating meta-sync-file")
     ;; ( Change to original branch
-    (mc-switch-to-original-branch)
-    (_mc-apply-change files-with-contents)
-    (_mc-stage-files '("*"))))
+    (if (= (mc-switch-to-original-branch) 0)
+	(progn
+	  (_mc-apply-change files-with-contents)
+	  (_mc-stage-files '("*")))
+      (switch-to-buffer shell-command-buffer-name))))
 ;; (shell-command "sudo rm -r ~/config-backup/; cp -r ~/.config/emacs ~/config-backup/")
 ;; (shell-command "cd ~/config-backup/; git checkout meta")
-;; (let ((default-directory "~/config-backup/")) (setq my-aux (_mc-get-all-files-names-with-filtered-content '("meta/parallel-commit.el" "meta/overlay-hide.el"))))
-;; (shell-command "cd ~/config-backup/; git checkout main")
-;; (let ((default-directory "~/config-backup/")) (_mc-apply-change my-aux))
+;; (find-file "~/config-backup/")
+;; (let ((default-directory "~/config-backup/")) (mc-parallel-commit-1))
