@@ -5,11 +5,19 @@
 ;; ( All functions in this package will be prepended by "mc" as in "meta-content"
 ;; (
 ;; ( A command to switch to the meta branch, creating one if it does not exist.
+
+(defvar _mc-original-branch "main" "Holds the value of the original branch's name")
+(defvar _mc-meta-branch     "meta" "Holds the value of the meta branch's name")
+
 (defun mc-switch-to-meta-branch ()
   (interactive)
   (if (_mc-check-if-meta-branch-exists)
-      (_mc-switch-to-branch "meta")
+      (_mc-switch-to-branch _mc-meta-branch)
     (_mc-create-meta-branch)))
+
+(defun mc-switch-to-original-branch ()
+  (interactive)
+  (_mc-switch-to-branch _mc-original-branch))
 
 ;; (find-sh "git branch --help")
 ;; (find-sh "git branch --help" "-l, --list")
@@ -25,7 +33,7 @@
 ;; (_mc-get-list-of-branches)
 
 (defun _mc-check-if-meta-branch-exists () ()
-       (-contains-p (_mc-get-list-of-branches) "meta"))
+       (-contains-p (_mc-get-list-of-branches) _mc-meta-branch))
 ;; (_mc-check-if-meta-branch-exists)
 
 (defun _mc-create-meta-branch () ()
@@ -33,6 +41,11 @@
 
 (defun _mc-switch-to-branch (branch-name) ()
        (shell-command (concat "git checkout " branch-name)))
+
+(defun _mc-stage-files (files)
+  ()
+  (dolist (f files)
+    (shell-command (concat "git add " f))))
 
 
 ;; (find-fline "./overlay-hide.el")

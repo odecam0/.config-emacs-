@@ -1,15 +1,7 @@
 ;; (find-fline "./main.el")
 ;; ( A command to hide meta-content using overlays
-
-(defvar _mc-major-mode-regexp-mapping nil
-  "This variable store what regexps will be used depending on which major-mode is active")
-(setq _mc-major-mode-regexp-mapping
-      '((python-mode . ("^\\(\s\\|	\\)*#+\s+.*\n\\(\\(\s\\|	\\)+*#+.*\n\\|\n\\)*"
-			"\"\"\"\n\\(.*\n\\)+\"\"\""))
-	(js-mode     . ("^\\(\s\\|	\\)*//\\(\s\\|	\\)(.+\\(\n?\\(\s\\|	\\)*//\\(\s\\|	\\)(.+\n\\)*"
-			"/\\*\n\\(.*\n\\)+\\*/"))
-	(emacs-lisp-mode . ("^\\(\s\\|	\\)*;+\s+.*\n\\(\n?\n?\\(\s\\|	\\)+*;+\s+(.*\n\\)*"
-			    "^\\(\s|	\\)*;+\s+(.*$"))))
+(load "meta/major-mode-regexp-mapping.el")
+;; (find-fline "./major-mode-regexp-mapping.el")
 
 (defvar _mc-overlays '() "A list of overlays that hide meta content")
 (defvar _mc-overlays-activep nil "Wether meta content is hidden or not")
@@ -70,13 +62,13 @@
   ""
   (_mc-overlay-matches (reduce #'-concat (mapcar #'_mc-list-matches regexps))))
 ;; (debug-on-entry #'_mc-overlays-4-each-regexp)
-;; (_mc-overlays-4-each-regexp (_mc-correct-regexps-for-buffer))
+;; (_mc-overlays-4-each-regexp (_mc-get-major-modes-regexp))
 
 (defun _mc-turn-on-overlays (&rest args)
   ()
   (_mc-make-overlays-invisible
    (setq _mc-overlays (_mc-overlays-4-each-regexp
-		       (_mc-correct-regexps-for-buffer))))
+		       (_mc-get-major-modes-regexp))))
   (setq _mc-overlays-activep t))
 
 (defun _mc-turn-off-overlays (&rest args)

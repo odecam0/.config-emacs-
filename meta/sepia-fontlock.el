@@ -26,7 +26,7 @@
   (font-lock-update))
 ;; (_mc-remove-sepia-fontlock)
 
-(defvar _mc-sepiap nil "Wheter sepia highlighting for meta content is enabled")
+(defvar-local _mc-sepiap nil "Wheter sepia highlighting for meta content is enabled")
 
 (defun mc-toggle-sepia ()
   (interactive)
