@@ -6,7 +6,7 @@
 ;; (
 ;; ( A command to switch to the meta branch, creating one if it does not exist.
 
-(defvar _mc-original-branch "main" "Holds the value of the original branch's name")
+(defvar-local _mc-original-branch "main" "Holds the value of the original branch's name")
 (defvar _mc-meta-branch     "meta" "Holds the value of the meta branch's name")
 
 (defun mc-switch-to-meta-branch ()
