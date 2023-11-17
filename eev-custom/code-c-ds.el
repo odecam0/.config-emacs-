@@ -20,3 +20,5 @@
 (code-c-d "crmb" "~/chronos-crm/flaskr/")
 (code-c-d "meta" "~/.config/emacs/meta/")
 (code-c-d "eevc" "~/.config/emacs/eev-custom/")
+(code-c-d "odecamsoil" "~/odecamsoil/")
+;; (find-odecamsoilfile "")

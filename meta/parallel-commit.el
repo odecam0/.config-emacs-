@@ -2,9 +2,6 @@
 ;; (   , get the content of the changed files, filter the meta contents, change to
 ;; (     the main branch again, apply the changes, and commit with the same message.
 
-;; ( Aqui é aparente onde vai dar mais trabalho.
-;; ( Aqui quero terminar de fazer funcionar para continuar o trabalho do crm.
-
 ;; ( TODO: Change find-file in _mc-get-file-filtered-content for something that does
 ;; (       not ask for permission when acessing already opened buffer that has changed
 ;; (       in disk

@@ -21,6 +21,18 @@
 
 
 ;; Customizando o eejump mais facilmente
+
+(defvar brnm-file-to-add-eejump-through-bcee nil
+  "Name of file where entry of eejump will be added if not nil")
+
+(defun brnm-toggle-this-file-as-eejump-bceee-target ()
+  (interactive)
+  "If the value of brnm-file-toadd-eejump-through-bcee is equivalent to the full path to the visited
+   file, set this variable as nil. Otherwise set the variable as the fullpath name to this file."
+    (if (string= (buffer-file-name) brnm-file-to-add-eejump-through-bcee)
+	(setq brnm-file-to-add-eejump-through-bcee nil)
+      (setq brnm-file-to-add-eejump-through-bcee (buffer-file-name))))
+
 (defun brnm-create-eejump-to-string-hyperlink (number)
   (interactive "P")
   (if mark-active
@@ -29,8 +41,17 @@
   (with-temp-buffer
     (insert (concat "(defun eejump-" (number-to-string number) " () "))
     (evil-paste-after 1)
+    (goto-char (- (point-max) 1))
     (insert ")")
-    (ee-eval-sexp-eol)))
+    (evil-yank (point-min) (point-max))
+    (ee-eval-sexp-eol))
+  (if brnm-file-to-add-eejump-through-bcee
+      (save-window-excursion
+	(find-file brnm-file-to-add-eejump-through-bcee)
+	(goto-char (point-max))
+	(evil-paste-after 1)
+	(save-buffer)
+	)))
 (defalias 'bcee 'brnm-create-eejump-to-string-hyperlink)
 
 (defun brnm-set-default-eejump-values ()
