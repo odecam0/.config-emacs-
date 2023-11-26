@@ -183,3 +183,7 @@
 
 
 (setq org-hide-emphasis-markers t)
+
+(straight-use-package 'git-gutter-fringe)
+
+;; tuntox://50FE202B291CF74CF294A1B6D12D6302B2C45399F0FC197368CDF8B9267FB82F9B03A0A172DC:6530

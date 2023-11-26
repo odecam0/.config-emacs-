@@ -1,3 +1,8 @@
+;; ( This code is faulty, when I set the center thing in a buffer and change
+;; ( to another buffer wich is also centered, the centering parameters such as
+;; ( margin size are of the previous centered buffer.. These are not being buffer
+;; ( local.
+
 (straight-use-package 'olivetti)
 (require 'olivetti)
 (straight-use-package 'hide-mode-line)
@@ -29,7 +34,7 @@
        (max 0
 	    (/ (- (window-height) (brnm--last-line)) 2)))
 
-(defvar brnm-center-overlay)
+(defvar-local brnm-center-overlay nil "")
 (make-variable-buffer-local 'brnm-center-overlay)
 
 (defun brnm-overlay-center-vertically () (interactive)
@@ -42,7 +47,7 @@
 	 (setq brnm-center-overlay (make-overlay (point-min) (point-max) (current-buffer)))
 	 (overlay-put brnm-center-overlay 'before-string (make-string (brnm--count-lines) ?\n))))
 
-(defvar brnm-stuff-centered)
+(defvar-local brnm-stuff-centered nil "")
 (make-variable-buffer-local 'brnm-stuff-centered)
 (defun brnm-center-stuff () (interactive)
        (brnm-overlay-center-vertically)

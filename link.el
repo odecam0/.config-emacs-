@@ -21,7 +21,8 @@
   	     (find-file brnm-save-link-file)
   	     (goto-char (point-max))
   	     (yank)
-  	     (save-buffer)))))
+  	     (save-buffer)
+	     (kill-buffer)))))
 
 (advice-add 'eeklf :after 'brnm-paste-link-in-save-file)
 (advice-add 'eeklfs :after 'brnm-paste-link-in-save-file)
