@@ -19,9 +19,6 @@
     (evil-paste-after 1)
     (save-buffer)))
 
-
-;; Customizando o eejump mais facilmente
-
 (defvar brnm-file-to-add-eejump-through-bcee nil
   "Name of file where entry of eejump will be added if not nil")
 
@@ -51,6 +48,7 @@
 	(goto-char (point-max))
 	(evil-paste-after 1)
 	(save-buffer)
+	(kill-buffer)
 	)))
 (defalias 'bcee 'brnm-create-eejump-to-string-hyperlink)
 
@@ -86,3 +84,16 @@
 (defun brnm-load-eejump-settings-from-file ()
   (interactive)
   (load brnm-eejump-save-file))
+
+
+;; Customizando o eejump mais facilmente
+(defun brnm-find-bcee-file-on-this-git-repo ()
+  (interactive)
+  "This function will find the file meta/eejump-targets.el located in the root of the current git repository."
+  (shell-command "git rev-parse --show-toplevel")
+  (let ((local-root-dir (with-current-buffer shell-command-buffer-name
+			  (concat (buffer-substring-no-properties (point-min) (- (point-max) 1)) "/"))))
+    (find-file (concat local-root-dir "meta/eejump-targets.el"))))
+(defalias 'fbcee 'brnm-find-bcee-file-on-this-git-repo)
+
+(advice-add 'fbcee :after (lambda () () (setq brnm-file-to-add-eejump-through-bcee (buffer-file-name))))
