@@ -15,15 +15,13 @@
 ;; (       Pode haver um probleme (find-metafile "overlay-hide.el" "ESQUEMA INTERNO")
 ;; (       Outro problema será testar esse tipo de coisa, pois o teste é bem invasivo.
 
-;; ( git diff --name-only commit-hash
-
 ;; (defun eejump-3 () () (swiper "(defun"))
 ;; (defun eejump-33 () () (swiper ";;\\W\\w"))
 
-(load-file "./main.el")
+(load "main.el")
 ;; (find-fline "~/.config/emacs/meta/main.el")
 
-(load-file "./major-mode-regexp-mapping.el")
+(load "major-mode-regexp-mapping.el")
 ;; (find-file "./major-mode-regexp-mapping.el")
 
 ;; ;;;;;;;;;;;;; ;;
@@ -342,3 +340,5 @@
 ;; (shell-command "cd ~/config-backup/; git checkout meta")
 ;; (find-file "~/config-backup/")
 ;; (let ((default-directory "~/config-backup/")) (mc-parallel-commit-1))
+
+;; (debug-on-entry 'mc-parallel-commit-1)

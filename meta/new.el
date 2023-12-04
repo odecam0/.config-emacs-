@@ -12,7 +12,7 @@
 ;; ( And a way to show the different regions of altered text in a single file,
 ;; ( linearly, such that altering there, the alteration could be put in the right place.
 ;; ( but the second one is too advanced. Maybe could be more feasible if I had implemented
-;; ( the sexps that define a given region.
+;; ( the SEXPS THAT DEFINE A GIVEN REGION.
 
 ;; ( Now I can think of the first solving scheme. Right now I think of using the eejump
 ;; ( to assign number with a given structure to define a sequence of places where changes

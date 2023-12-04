@@ -164,10 +164,13 @@
 (straight-use-package 'rg)
 
 
-(load "meta/overlay-hide.el")
-(load "meta/new.el")
-(load "meta/sepia-fontlock.el")
-(load "meta/intra-search.el")
+(add-to-list 'load-path "~/.config/emacs/meta/")
+(load "overlay-hide.el")
+(load "new.el")
+(load "sepia-fontlock.el")
+(load "intra-search.el")
+(load "parallel-commit.el")
+(load "meta-file-double-link.el")
 ;; (find-fline "./meta/")
 
 (load "toggle")

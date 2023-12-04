@@ -3,8 +3,8 @@
 (load "meta/major-mode-regexp-mapping.el")
 ;; (find-fline "./major-mode-regexp-mapping.el")
 
-(defvar _mc-overlays '() "A list of overlays that hide meta content")
-(defvar _mc-overlays-activep nil "Wether meta content is hidden or not")
+(defvar-local _mc-overlays '() "A list of overlays that hide meta content")
+(defvar-local _mc-overlays-activep nil "Wether meta content is hidden or not")
 
 (defun _mc-kill-overlays (overlays)
   ()
@@ -85,3 +85,8 @@
       (_mc-turn-on-overlays))))
 ;; (debug-on-entry #'mc-toggle-hide-meta)
 ;; (cancel-debug-on-entry #'mc-toggle-hide-meta)
+
+(defun mc-force-kill-all-overlays-in-buffer ()
+  (interactive)
+  (_mc-kill-overlays (overlays-in (point-min) (point-max))))
+;; (debug-on-entry #'mc-force-kill-all-overlays-in-buffer)

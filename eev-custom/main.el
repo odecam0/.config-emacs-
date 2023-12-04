@@ -95,5 +95,4 @@
 			  (concat (buffer-substring-no-properties (point-min) (- (point-max) 1)) "/"))))
     (find-file (concat local-root-dir "meta/eejump-targets.el"))))
 (defalias 'fbcee 'brnm-find-bcee-file-on-this-git-repo)
-
 (advice-add 'fbcee :after (lambda () () (setq brnm-file-to-add-eejump-through-bcee (buffer-file-name))))

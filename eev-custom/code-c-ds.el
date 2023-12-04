@@ -22,3 +22,5 @@
 (code-c-d "eevc" "~/.config/emacs/eev-custom/")
 (code-c-d "odecamsoil" "~/odecamsoil/")
 ;; (find-odecamsoilfile "")
+(code-c-d "crm" "~/chronos-crm/")
+;; (find-crmfile "")
