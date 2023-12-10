@@ -171,6 +171,7 @@
 (load "intra-search.el")
 (load "parallel-commit.el")
 (load "meta-file-double-link.el")
+(load "link-to-region.el")
 ;; (find-fline "./meta/")
 
 (load "toggle")
@@ -189,4 +190,8 @@
 
 (straight-use-package 'git-gutter-fringe)
 
-;; tuntox://50FE202B291CF74CF294A1B6D12D6302B2C45399F0FC197368CDF8B9267FB82F9B03A0A172DC:6530
+(straight-use-package 'counsel)
+
+;; (find-dailyfile "10-12-2023.org" "(( FIND ATOMIC LINKS WITH REGEXP ))")
+(defun atmn () (interactive) (rg "^\\(\\([[:space:]]([A-Z\-ÇÁÉÍÓÚÂÊÎÛÔÃÕ]+[[:space:]])+\\)\\)" "**" "~/daily"))
+(defun actnbl () (interactive) (let ((rg-command-line-flags '("-U"))) (rg "^\\(!\\)([[:space:]][A-Z\-ÇÁÉÍÓÚÂÊÎÛÔÃÕ]+)+\\n.+" "**" "~/daily")))
