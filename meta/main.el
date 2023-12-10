@@ -8,7 +8,7 @@
 
 (defvar _mc-original-branch "main" "Holds the value of the original branch's name")
 (defvar _mc-meta-branch     "meta" "Holds the value of the meta branch's name")
-;; (setq _mc-original-branch "master")
+(setq _mc-original-branch "master")
 
 (defun mc-switch-to-meta-branch ()
   (interactive)

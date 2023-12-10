@@ -2,7 +2,7 @@
   "This variable store what regexps will be used depending on which major-mode is active")
 (setq _mc-major-mode-regexp-mapping
       '((python-mode . ("^\\(\s\\|	\\)*#+\s+.*\n\\(\\(\s\\|	\\)+*#+.*\n\\|\n\\)*"
-			"\"\"\"\n\\(.*\n\\)+\"\"\""))
+			"\"\"\"\n\\(.*\n\\)*?\"\"\""))
 	(js-mode     . ("^\\(\s\\|	\\)*//\\(\s\\|	\\)(.+\\(\n?\\(\s\\|	\\)*//\\(\s\\|	\\)(.+\n\\)*"
 			"/\\*\n\\(.*\n\\)+\\*/"))
 	(emacs-lisp-mode . ("^\\(\s\\|	\\)*;+\s+.*\n\\(\n?\n?\\(\s\\|	\\)+*;+\s+(.*\n\\)*"

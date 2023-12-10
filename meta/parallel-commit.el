@@ -52,7 +52,7 @@
    the line being formated as:
    \"original: <hash> | meta: <hash_to_be_returned> | type: <parallel-commit|merge>\""
   (save-window-excursion 
-    (find-file _mc-sync-log-file-name)
+    (find-file (concat (_mc-get-git-root-dir) _mc-sync-log-file-name))
     (string-match "original:\s.+\s|\smeta:\s+\\([^\s]+\\)\s"
 		  (buffer-substring-no-properties
 		   (line-beginning-position)
@@ -323,7 +323,8 @@
 	    files-that-changed-since-last-sync-commit)) ))
     (_mc-write-meta-hash-to-sync-log-file)
     (_mc-stage-files `(,(concat (_mc-get-git-root-dir) _mc-sync-log-file-name)))
-    (_mc-commit-with-message "Updating meta-sync-file")
+    (if (= (_mc-commit-with-message "Updating meta-sync-file") 1)
+	(shell-command (concat "git restore --staged " _mc-sync-log-file-name)))
     
     (_mc-copy-not-filtered-files-from-meta-to-temp files-that-changed-since-last-sync-commit)
 
