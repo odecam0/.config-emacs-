@@ -44,7 +44,36 @@
              (find-file "~/index.el")
              ))))
 
-(defun brnm-toggle-vterm-buffer () (interactive)
-       (if (string= "*vterm*" (buffer-name (current-buffer)))
-	   (winner-undo)
-	 (vterm)))
+
+;; ( Aqui haverá um esquema de abrir vterms diferentes com nomes diferentes, utilizando o prefix arg
+;; ( Tendo um número como prefix-arg, irá criar, ou mudar para um *vterm<n>* named buffer.
+;; ( Tendo um número negativo como prefix-arg, irá trocar o buffer *vterm* com o nome pelo *vterm<n>*
+;; ( se for só o valor negativo, troca o atual pelo *vterm*
+(defun brnm-toggle-vterm-buffer (arg)
+  (interactive "P")
+  (cond
+   ((or (not arg))
+    (if (string= "*vterm*" (buffer-name (current-buffer)))
+	(winner-undo)
+      (vterm)))
+   ((> arg 0)
+    (if (string= (concat "*vterm*<" (number-to-string arg) ">") (buffer-name))
+	(winner-undo)
+      (let ((vterm-buffer-name (concat "*vterm*<" (number-to-string arg) ">")))
+	(vterm))))
+   ((< arg 0)
+    (brnm-exchange-n-for-vterm (* arg -1)))))
+
+(defun brnm-exchange-n-for-vterm (n)
+  ()
+  "This function will exchange the names of the buffers *vterm* and *vterm<n>*"
+  (save-window-excursion
+    (let ((vtermn (concat "*vterm*<" (number-to-string n) ">")))
+    (switch-to-buffer "*vterm*")
+    (rename-buffer "*aux*")
+    (switch-to-buffer vtermn)
+    (rename-buffer "*vterm*")
+    (switch-to-buffer "*aux*")
+    (rename-buffer vtermn))))
+
+
