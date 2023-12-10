@@ -21,13 +21,21 @@
   (exchange-point-and-mark)
   (search-forward "\n\n\n")
   (goto-char (match-beginning 0))
+  (exchange-point-and-mark)
+  (beginning-of-line))
+
+;; (mus "exchange")
+(defun mark-until-search (search)
+  (interactive "Msearch:")
+  (beginning-of-line)
+  (push-mark)
+  (forward-line)
+  (search-forward search)
+  (end-of-line)
   (exchange-point-and-mark))
 
 (defalias 'mpdbl 'mark-paragraph-to-next-double-blank-line)
 (defalias 'mp    'mark-paragraph)
+(defalias 'mus   'mark-until-search)
 
-;; Isso aqui simplesmente não funciona?
-(advice-add 'mark-paragraph :after (lambda (&rest r) (goto-char (+ (point) 1)) '((name "test")))
-;; (debug-on-entry 'mark-paragraph)
-;; (advice-remove 'mark-paragraph (lambda () (goto-char (+ (point) 1)))
-;; (advice-remove 'mark-paragraph 'forward-line)
+(advice-add 'mark-paragraph :after (lambda (&rest r) (goto-char (+ (point) 1)) '((name "test"))))
