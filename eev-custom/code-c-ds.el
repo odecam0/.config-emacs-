@@ -24,3 +24,5 @@
 ;; (find-odecamsoilfile "")
 (code-c-d "crm" "~/chronos-crm/")
 ;; (find-crmfile "")
+(code-c-d "config" "/home/odecam/.config/emacs/")
+;; (find-configfile "")
