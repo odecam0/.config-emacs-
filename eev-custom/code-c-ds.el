@@ -26,3 +26,5 @@
 ;; (find-crmfile "")
 (code-c-d "config" "/home/odecam/.config/emacs/")
 ;; (find-configfile "")
+(code-c-d "0soilc" "~/odecamsoil/src/components/")
+;; (find-0soilcfile "")

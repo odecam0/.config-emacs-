@@ -1,3 +1,5 @@
+(defalias 'find-pdf-page 'find-pdftools-page)
+
 ;; Para que os hyperlinks sejam case sensitive
 (setq-default case-fold-search nil)
 
