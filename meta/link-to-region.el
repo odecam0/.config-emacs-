@@ -34,8 +34,16 @@
   (end-of-line)
   (exchange-point-and-mark))
 
+(defun mark-line ()
+  (interactive)
+  (end-of-line)
+  (push-mark)
+  (beginning-of-line)
+  (activate-mark))
+
 (defalias 'mpdbl 'mark-paragraph-to-next-double-blank-line)
 (defalias 'mp    'mark-paragraph)
 (defalias 'mus   'mark-until-search)
+(defalias 'ml    'mark-line)
 
 (advice-add 'mark-paragraph :after (lambda (&rest r) (goto-char (+ (point) 1)) '((name "test"))))
