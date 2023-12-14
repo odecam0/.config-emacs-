@@ -35,14 +35,11 @@
 
 (defvar my-index-previous-buffer)
 (defun toggle-index-buffer () (interactive)
-       (if (string= "index.el" (buffer-name (current-buffer)))
-           (call-interactively 'ibuffer)
-         (if (string= "*Ibuffer*" (buffer-name (current-buffer)))
-             (find-ebuffer my-index-previous-buffer)
-           (progn
-             (setq my-index-previous-buffer (current-buffer))
-             (find-file "~/index.el")
-             ))))
+       (if (string= "*Ibuffer*" (buffer-name (current-buffer)))
+           (find-ebuffer my-index-previous-buffer)
+         (setq my-index-previous-buffer (current-buffer))
+         (call-interactively 'ibuffer)
+         ))
 
 
 ;; ( Aqui haverá um esquema de abrir vterms diferentes com nomes diferentes, utilizando o prefix arg
