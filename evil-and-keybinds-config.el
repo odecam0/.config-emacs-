@@ -48,3 +48,8 @@
 (evil-define-key '(normal insert visual replace) global-map (kbd "C-x &") '(lambda (command)
 									     (interactive (list (read-shell-command "$ ")))
 									     (start-process-shell-command command nil command)))
+
+(evil-define-key '(normal insert visual replace) global-map (kbd "M-p") #'daily-find-previous-note)
+(evil-define-key '(normal insert visual replace) global-map (kbd "M-n") #'daily-find-next-note)
+(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-p") #'daily-find-previous-note)
+(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-n") #'daily-find-next-note)

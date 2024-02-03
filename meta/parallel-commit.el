@@ -27,10 +27,10 @@
 ;; ;;;;;;;;;;;;; ;;
 ;; GETTING FILES ;;
 ;; ;;;;;;;;;;;;; ;;
-;;
-;; ( When getting files, i should always ignore the _mc-sync-log-file-name file.
-;; ( Now it is already being ignored because meta_sync_log is not added to _mc-file-extensions-to-filter
-;; ( list.
+
+;; ( When getting files, I should always ignore the _mc-sync-log-file-name file.
+;; ( Now it is already being ignored because meta_sync_log is not added to
+;; ( _mc-file-extensions-to-filter list.
 
 (defvar _mc-sync-log-file-name ".meta_sync_log"
   "Holds the name of the file that will be stored in the meta branch, and will store a history
@@ -42,9 +42,6 @@
 
    The lines will be added always at the beginning of the file, the first line being representing
    the latest sync.")
-
-(defvar _mc-file-extensions-to-filter '("el" "py" "js" "gitignore")
-  "Only filter file if it got one of these file extensions.")
 
 (defun _mc-get-last-sync-meta-hash ()
   ()
@@ -59,6 +56,10 @@
 		   (line-end-position)))
     (buffer-substring-no-properties (+ (match-beginning 1) 1) (+ (match-end 1) 1))))
 ;; (_mc-get-last-sync-meta-hash)
+
+
+(defvar _mc-file-extensions-to-filter '("el" "py" "js" "gitignore")
+  "Only filter file if it got one of these file extensions.")
 
 (defun _mc-get-files-that-changed-since-commit (commit-hash)
   ()
