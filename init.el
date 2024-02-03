@@ -67,11 +67,16 @@
 ;; (face-attribute 'font-lock-function-name-face :weight)
 (set-face-attribute 'font-lock-function-name-face nil :weight 'bold)
 
-(straight-use-package 'eev)
+(straight-use-package '(eev :host github
+			    :repo "edrx/eev"
+			    :branch "UTF-8"))
 (require 'eev-load)
+(load "eev-load")
 (eev-mode 1)
 (load "eev-custom/code-c-ds")
 (load "eev-custom/main")
+(load "eev-custom/templates")
+(load "eev-custom/custom-eejump")
 ;; (find-fline "./eev-custom/code-c-ds.el")
 ;; (find-fline "./eev-custom/main.el")
 
@@ -124,7 +129,7 @@
 (straight-use-package 'org-transclusion)
 
 (straight-use-package 'elpy)
-(elpy-enable)
+;; (elpy-enable)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
 (straight-use-package 'evil-mc)
@@ -195,3 +200,29 @@
 ;; (find-dailyfile "10-12-2023.org" "(( FIND ATOMIC LINKS WITH REGEXP ))")
 (defun atmn () (interactive) (rg "^\\(\\([[:space:]]([A-Z\-ÇÁÉÍÓÚÂÊÎÛÔÃÕ]+[[:space:]])+\\)\\)" "**" "~/daily"))
 (defun actnbl () (interactive) (let ((rg-command-line-flags '("-U"))) (rg "^\\(!\\)([[:space:]][A-Z\-ÇÁÉÍÓÚÂÊÎÛÔÃÕ]+)+.?(\\(.+\\))?\\n.+" "*" "~/daily")))
+
+(evil-define-key '(normal visual replace insert) global-map (kbd "M-k") (lambda () (interactive) (kill-buffer (current-buffer))))
+
+(display-time)
+(display-battery-mode)
+
+(straight-use-package '(awesome-tray :host github
+				     :repo "manateelazycat/awesome-tray"))
+;; (awesome-tray-mode 1)
+
+(defvar brnm-screen-on-p nil "Wether screen is turned on")
+(defun brnm-toggle-screen-on-off ()
+  (interactive)
+  (if brnm-screen-on-p
+      (progn
+	(setq brnm-screen-on-p nil)
+	(shell-command "sudo vbetool dpms off"))
+    (setq brnm-screen-on-p t)
+    (shell-command "sudo vbetool dpms on")))
+(defalias 'btsof 'brnm-toggle-screen-on-off)
+
+;; (find-dailycaps "10-01-2024.org" "go back to link")
+(defun brnm-mark-before-fline (str &rest r) ()
+(push-mark (point))
+(deactivate-mark))
+(advice-add 'find-fline :before 'brnm-mark-before-fline)
