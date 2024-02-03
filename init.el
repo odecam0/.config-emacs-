@@ -77,6 +77,7 @@
 (load "eev-custom/main")
 (load "eev-custom/templates")
 (load "eev-custom/custom-eejump")
+(load "eev-custom/utils.el")
 ;; (find-fline "./eev-custom/code-c-ds.el")
 ;; (find-fline "./eev-custom/main.el")
 
