@@ -12,16 +12,27 @@
 
 (winner-mode 1)
 ;; Função que vai ou cria buffer de navegador
+;; (defun toggle-chromium-buffer (arg) (interactive "P")
+;;        (let ((buffer-name
+;; 	      (if arg
+;; 		  (concat "Chromium<" (number-to-string arg) ">")
+;; 		"Chromium")))
+;;        (if (string= buffer-name (buffer-name (current-buffer)))
+;; 	   (winner-undo)
+;; 	 (if (not (get-buffer buffer-name))
+;; 	     (start-process-shell-command "chromium" nil "chromium")
+;; 	   (find-ebuffer buffer-name)))))
+
 (defun toggle-chromium-buffer (arg) (interactive "P")
        (let ((buffer-name
 	      (if arg
-		  (concat "Chromium<" (number-to-string arg) ">")
-		"Chromium")))
+		  (concat "firefox<" (number-to-string arg) ">")
+		"firefox")))
        (if (string= buffer-name (buffer-name (current-buffer)))
 	   (winner-undo)
 	 (if (not (get-buffer buffer-name))
-	     (start-process-shell-command "chromium" nil "chromium")
-	   (find-ebuffer buffer-name)))))
+	     (start-process-shell-command "firefox" nil "firefox")
+	   (find-ebuffer buffer-name))))) ;
 
 ;; Aux file functionality
 (defun set-this-as-aux-file () (interactive)
