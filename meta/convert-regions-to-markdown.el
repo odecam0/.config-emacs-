@@ -40,11 +40,23 @@
 ;; (debug-on-entry 'crtm-discriminate-region)
 ;; (cancel-debug-on-entry 'crtm-discriminate-region)
 
-(defun crtm-convert-buffer ()
+(defun crtm-convert-buffer (&optional filename)
   (interactive)
-  (crtm-scan-buffer
-   #'crtm-select-region
-   (lambda () (crtm-discriminate-region #'crtm-deal-with-prose #'crtm-deal-with-region-links #'(lambda (x) x)))))
+  "It goes through a buffer using crtm-scan-buffer, and for each pattern matched
+   by crtm-select-region, it discriminates it using a dispatch function.
+   The dispatch function is implemented using crtm-discriminate-region, which
+   calls the nth function passed to it if the patter was matched by nth group in
+   crtm-select-region"
+  (let ((converted-text (crtm-scan-buffer
+			 #'crtm-select-region
+			 (lambda () (crtm-discriminate-region
+				     #'crtm-deal-with-prose
+				     #'crtm-deal-with-region-links
+				     #'(lambda (x) x))))))
+    (if (not filename)
+	(converted-text)
+      (find-file filename)
+      (insert converted-text))))
 
 
 (defun crtm-deal-with-prose (text)
