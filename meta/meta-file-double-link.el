@@ -27,6 +27,8 @@
 ;; ( Esta função deve ser chamada após a variável _mc-current-meta-file estar definida
 
 (advice-add 'mc-set-current-buffer-as-meta-file :after #'_mc-associate-m-code-cd)
+(advice-add 'mc-create-meta-file :after #'mc-set-current-buffer-as-meta-file)
+;; (advice-remove 'mc-create-meta-file #'mc-set-current-buffer-as-meta-file)
 
 (defun mc-create-double-link (link-name)
   (interactive "MThe link's name")
@@ -41,7 +43,7 @@
     (goto-char (point-max))
     (yank)
     (save-buffer)
-    (close-buffer)))
+    (kill-buffer)))
 
 (defun mc-meta-file-follow-link (num)
   (interactive "P")
@@ -55,15 +57,17 @@
 	  (setq link-num (mod num 100)))
 
 	(find-file _mc-current-meta-file)
+	(kill-buffer)
+	(find-file _mc-current-meta-file)
 	(goto-char (point-min))
 
-	(search-forward "\n\n\n" nil nil (- paragraph-num 1))
+	(search-forward-regexp "\n\n+\n" nil nil (- paragraph-num 1))
 	(search-forward-regexp "^(" nil nil (+ link-num 1))
 
 	(setq link (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
-	(save-buffer)
-	(kill-buffer)
+	;; (save-buffer)
+	;; (kill-buffer)
 
 	(eval (read link)))
     (find-file _mc-current-meta-file)))
@@ -73,4 +77,3 @@
 (defun mc-goto-meta-folder ()
   (interactive)
   (find-file (concat (_mc-get-git-root-dir) "meta/")))
-    
