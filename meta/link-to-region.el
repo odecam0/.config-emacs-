@@ -14,12 +14,12 @@
 ;; (  Este link pode ser recuperado utilizando o .meta-sync-log-file algo assim..
 ;; (find-metafile "parallel-commit.el" "defvar _mc-sync-log-file-name" '(mp 3))
 
-(defun mark-paragraph-to-next-double-blank-line ()
-  (interactive)
+(defun mark-paragraph-to-next-double-blank-line (&optional number)
+  (interactive "P")
   (mark-paragraph)
   (forward-char)
   (exchange-point-and-mark)
-  (search-forward "\n\n\n")
+  (search-forward "\n\n\n" nil t number)
   (goto-char (match-beginning 0))
   (exchange-point-and-mark)
   (beginning-of-line))
