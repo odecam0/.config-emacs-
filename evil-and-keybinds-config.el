@@ -49,7 +49,16 @@
 									     (interactive (list (read-shell-command "$ ")))
 									     (start-process-shell-command command nil command)))
 
-(evil-define-key '(normal insert visual replace) global-map (kbd "M-p") #'daily-find-previous-note)
-(evil-define-key '(normal insert visual replace) global-map (kbd "M-n") #'daily-find-next-note)
-(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-p") #'daily-find-previous-note)
-(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-n") #'daily-find-next-note)
+;; (evil-define-key '(normal insert visual replace) global-map (kbd "M-p") #'daily-find-previous-note)
+;; (evil-define-key '(normal insert visual replace) global-map (kbd "M-n") #'daily-find-next-note)
+;; (evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-p") #'daily-find-previous-note)
+;; (evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-n") #'daily-find-next-note)
+
+;; (evil-define-key '(normal insert visual replace) global-map (kbd "M-p")      nil)
+;; (evil-define-key '(normal insert visual replace) global-map (kbd "M-n")      nil)
+(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-p") nil)
+(evil-define-key '(normal insert visual replace) evil-mc-key-map (kbd "M-n") nil)
+
+(evil-define-key 'normal global-map (kbd "M-b") 'brnm-toggle-page-text)
+
+(evil-define-key 'motion Info-mode-map (kbd "RET") 'Info-follow-nearest-node)

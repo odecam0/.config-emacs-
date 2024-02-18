@@ -44,9 +44,11 @@
 ;;  (find-node "(elisp)Defining Minor Modes" ":keymap KEYMAP")
 
 (setq page-utils-mode-map (make-sparse-keymap))
-(evil-define-key '(normal insert) page-utils-mode-map (kbd "M-b") #'brnm-toggle-page-text)
-(evil-define-key '(normal insert) page-utils-mode-map (kbd "M-n") #'brnm-increase-page-number)
-(evil-define-key '(normal insert) page-utils-mode-map (kbd "M-p") #'brnm-decrease-page-number)
+
+(with-eval-after-load 'evil
+  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-b") #'brnm-toggle-page-text)
+  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-n") #'brnm-increase-page-number)
+  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-p") #'brnm-decrease-page-number))
 
 (define-minor-mode page-utils-mode
   "Defines a keymap for interacting and modifying pdf hyperlinks with simple commands.")
