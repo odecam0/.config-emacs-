@@ -58,6 +58,14 @@
    in the N'th group of links. If N is greater than 100, than the last 2 digits inform wich
    link in the group is going to be followed, and tha number to the left informs wich group.
    3 is equivalent to 300."
+  (mc-meta-file-follow-link-generic num _mc-current-meta-file))
+
+(defun mc-meta-file-follow-link-generic (num meta-file)
+  (interactive "P")
+  "Receives a number prefix argument N. If N is less than 100, it follows the first link
+   in the N'th group of links. If N is greater than 100, than the last 2 digits inform wich
+   link in the group is going to be followed, and tha number to the left informs wich group.
+   3 is equivalent to 300."
   (if num
       (let (paragraph-num link-num link)
 	(if (< num 100)
@@ -67,9 +75,9 @@
 	  (setq paragraph-num (/ num 100))
 	  (setq link-num (mod num 100)))
 
-	(find-file _mc-current-meta-file)
+	(find-file meta-file)
 	(kill-buffer)
-	(find-file _mc-current-meta-file)
+	(find-file meta-file)
 	(goto-char (point-min))
 
 	(search-forward-regexp "\n\n+\n" nil nil (- paragraph-num 1))
@@ -81,6 +89,6 @@
 	;; (kill-buffer)
 
 	(eval (read link)))
-    (find-file _mc-current-meta-file)))
+    (find-file meta-file)))
 
 (evil-define-key '(normal insert replace visual) global-map (kbd "M-L") #'mc-meta-file-follow-link)
