@@ -100,3 +100,9 @@
 (advice-add 'fbcee :after (lambda () () (setq brnm-file-to-add-eejump-through-bcee (buffer-file-name))))
 
 ;; (load-file "templates.el")		;
+
+;; ;; Fixing eev-avadj-mode-map for evil.
+;; (evil-define-key 'normal eev-avadj-mode-map (kbd "M--") 'ee-time-from-bol-shift-)
+;; (evil-define-key 'normal eev-avadj-mode-map (kbd "M-=") 'ee-time-from-bol-shift)
+;; (evil-define-key 'normal eev-avadj-mode-map (kbd "M-+") 'ee-time-from-bol-shift)
+;; (evil-define-key 'normal eev-avadj-mode-map (kbd "M-p") 'ee-time-from-bol-rerun)

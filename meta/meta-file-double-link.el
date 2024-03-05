@@ -25,7 +25,7 @@
   (eval (read (ee-template00 "(code-c-d \"m\" \"{(f-dirname _mc-current-meta-file)}/\")"))))
 ;; ( Esta função deve ser chamada após a variável _mc-current-meta-file estar definida
 
-(defun mc-set-current-buffer-as-meta-file ()
+(defun mc-set-current-buffer-as-meta-file (file-name)
   (interactive)
   "Sets the current buffer's visited file as the meta-file.
    And associates the files directory with the find-mfile fucntion."
@@ -68,20 +68,13 @@
    3 is equivalent to 300."
   (if num
       (let (paragraph-num link-num link)
-	(if (< num 100)
-	    (progn
-	      (setq paragraph-num num)
-	      (setq link-num 0))
-	  (setq paragraph-num (/ num 100))
-	  (setq link-num (mod num 100)))
 
 	(find-file meta-file)
+	(save-buffer)
 	(kill-buffer)
 	(find-file meta-file)
-	(goto-char (point-min))
 
-	(search-forward-regexp "\n\n+\n" nil nil (- paragraph-num 1))
-	(search-forward-regexp "^(" nil nil (+ link-num 1))
+	(brnm-find-element-in-nth-paragraph num "^(")
 
 	(setq link (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
@@ -91,4 +84,48 @@
 	(eval (read link)))
     (find-file meta-file)))
 
+
+(defun brnm-find-element-in-nth-paragraph (num regexp)
+  ()
+  "Goes to the n'th paragraph separated by 2 blank lines, and the
+   goes to the m'th element matched by regexp.
+
+   Previou documentation, for previous, more specific, function:
+    Receives a number prefix argument N. If N is less than 100, it follows the first link
+    in the N'th group of links. If N is greater than 100, than the last 2 digits inform wich
+    link in the group is going to be followed, and tha number to the left informs wich group.
+    3 is equivalent to 300.
+   "
+  (if (= (point-max) 1)
+      (insert " ")
+    (goto-char (point-min))
+    (if (< num 100)
+	(progn
+	  (setq paragraph-num num)
+	  (setq link-num 0))
+      (setq paragraph-num (/ num 100))
+      (setq link-num (mod num 100)))
+
+    (search-forward-regexp "\n\n+\n" nil t (- paragraph-num 1))
+    
+    (let (group-end-pos)
+      (setq group-end-pos (+ 2 (save-excursion
+			    (if (search-forward-regexp "\n\n+\n" nil 1)
+				(match-beginning 0)
+			      (point)))))
+    (if (not (search-forward-regexp regexp
+			   group-end-pos
+			   t (+ link-num 1)))
+	     (goto-char group-end-pos)))))
+
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 1   "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 101 "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 103 "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 2   "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 201 "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 301 "^("))
+;; (progn (find-file _mc-current-meta-file) (brnm-find-element-in-nth-paragraph 102 "^("))
+
 (evil-define-key '(normal insert replace visual) global-map (kbd "M-L") #'mc-meta-file-follow-link)
+
+

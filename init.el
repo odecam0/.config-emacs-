@@ -178,6 +178,7 @@
 (load "parallel-commit.el")
 (load "meta-file-double-link.el")
 (load "link-to-region.el")
+(load "overlay-meta-file.el")
 ;; (find-fline "./meta/")
 
 (load "toggle")
@@ -227,3 +228,16 @@
 (push-mark (point))
 (deactivate-mark))
 (advice-add 'find-fline :before 'brnm-mark-before-fline)
+
+(server-start)
+
+(setq brnm-toggle-theme-whitep nil)
+(defun brnm-toggle-theme-tao ()
+  (interactive)
+  (if brnm-toggle-theme-whitep
+      (progn
+	(setq brnm-toggle-theme-whitep nil)
+	(load-theme 'tao-yin))
+    (setq brnm-toggle-theme-whitep t)
+    (load-theme 'tao-yang)))
+(defalias 'bttt 'brnm-toggle-theme-tao)

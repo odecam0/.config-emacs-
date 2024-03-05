@@ -12,6 +12,10 @@
 
 (evil-define-key '(normal insert visual replace) global-map (kbd "M-=") 'text-scale-increase)
 (evil-define-key '(normal insert visual replace) global-map (kbd "M--") 'text-scale-decrease)
+(evil-define-key '(normal insert visual replace) global-map (kbd "M-=") nil)
+(evil-define-key '(normal insert visual replace) global-map (kbd "M--") nil)
+(evil-define-key '(normal insert visual replace) eev-avadj-mode-map (kbd "M-=") #'ee-time-from-bol-shift)
+(evil-define-key '(normal insert visual replace) eev-avadj-mode-map (kbd "M--") #'ee-time-from-bol-shift-)
 
 (evil-define-key '(normal insert visual replace) global-map (kbd "M-l") 'brnm-center-stuff)
 
@@ -62,3 +66,13 @@
 (evil-define-key 'normal global-map (kbd "M-b") 'brnm-toggle-page-text)
 
 (evil-define-key 'motion Info-mode-map (kbd "RET") 'Info-follow-nearest-node)
+
+
+(with-eval-after-load 'ibuffer
+  (define-key ibuffer-mode-map (kbd "j") #'next-line)		   
+  (define-key ibuffer-mode-map (kbd "k") #'previous-line)		   
+  (evil-define-key 'emacs ibuffer-mode-map (kbd "j") #'next-line)	   
+  (evil-define-key 'emacs ibuffer-mode-map (kbd "k") #'previous-line))
+
+(evil-define-key 'visual global-map (kbd "I") #'evil-mc-make-cursor-in-visual-selection-beg)
+(evil-define-key 'visual global-map (kbd "A") #'evil-mc-make-cursor-in-visual-selection-end)

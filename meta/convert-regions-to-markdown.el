@@ -25,7 +25,7 @@
 (defun crtm-select-region ()
   ()
   "Implements the search for a pattern"
-  (search-forward-regexp "\\(;;.*\n\\)+\\|\\(^(.+)$\\)\\|\\(\n\n\n\\)" nil t))
+  (search-forward-regexp "\\(;;.*?\n\\)+\\|\\(^(.+)$\\)\\|\\(\n\n\n\\)" nil t))
 
 (defun crtm-discriminate-region (&rest rest)
   ()
@@ -36,7 +36,7 @@
     (dolist (proc rest)
       (setq index (+ 1 index))
       (if (match-string index)
-	  (return (funcall proc (substring-no-properties (match-string 0))))))))
+	  (cl-return (funcall proc (substring-no-properties (match-string 0))))))))
 ;; (debug-on-entry 'crtm-discriminate-region)
 ;; (cancel-debug-on-entry 'crtm-discriminate-region)
 
@@ -63,7 +63,7 @@
   ()
   "Will just filter out the beginning ';; ' of each line.
    It will also remove the last \n. Because of the regexp built."
-  (concat (s-replace-regexp "^;;\\W" "" text) "\n"))
+  (concat (s-replace-regexp "^;;\\ " "" text) "\n"))
 
 (defvar crtm-major-mode-to-src-block-type nil
   "Defines wich name of language to use in the source block of the markdown file")
@@ -80,9 +80,42 @@
    the end."
   (save-window-excursion
     (eval (read text))
-    (concat "``` "
-	    (cdr (assoc major-mode crtm-major-mode-to-src-block-type))
-	    "\n"
-	    (buffer-substring-no-properties (point) (mark))
-	    "\n```\n\n")))
+    (concat
+     "[Region on original file](" (crtm-get-github-link-to-region) ")\n"
+     "``` "
+     (cdr (assoc major-mode crtm-major-mode-to-src-block-type))
+     "\n"
+     (buffer-substring-no-properties (point) (mark))
+     "\n```\n\n")))
+
+(defvar crtm-remote-repo-url nil
+  "Holds the URL for the remote repo.
+   Ex: github.com/odecam0/chronos-crm/")
+(setq crtm-remote-repo-url "https://github.com/odecam0/.config-emacs-/")
+
+(defun crtm-get-github-link-to-region ()
+  ()
+  "Will generate a github hyperlink to the region active in the buffer."
+  (concat crtm-remote-repo-url
+	  "blob/"
+	  (_mc-get-last-commit-hash)
+	  "/" 
+	  (file-relative-name (buffer-file-name) (_mc-get-git-root-dir))
+	  "#L" (number-to-string (line-number-at-pos (region-beginning)))
+	  "-L" (number-to-string (line-number-at-pos (region-end)))
+	  ))
   
+;; (buffer-file-name)
+;; (_mc-get-git-root-dir)
+;; (file-relative-name (buffer-file-name) (_mc-get-git-root-dir))
+
+
+; (find-efunction-links 'file-relative-name)
+  
+;; (find-metagrep "grep -n \"root\" ./*")
+;; (find-metagrep "grep -n \"file\" ./*")
+;; (find-metagrep "grep -n current ./*")
+;; (find-metafile "parallel-commit.el" "defun _mc-get-last-commit-hash")
+  
+;; (find-node "(elisp)The Region")
+;; (find-efunction 'line-number-at-pos)

@@ -41,13 +41,24 @@
    Date must be in the format \"%Y-%m-%d\".
    Returns nil if no file was found"
   (shell-command (concat "find " my-daily-folder "/" date "* | grep \"\\.org$\""))
-  (let ((file-name (with-current-buffer shell-command-buffer-name
-		     (buffer-substring (point-min) (- (point-max) 1)))))
-    (if (string= (car (s-split "\s" file-name)) "find:")
-	nil
-      file-name)))
+  (if (with-current-buffer shell-command-buffer-name
+	(= (point-max) 1))
+      nil
+    (let ((file-name (with-current-buffer shell-command-buffer-name
+		       (buffer-substring (point-min) (- (point-max) 1)))))
+      (if (string= (car (s-split "\s" file-name)) "find:")
+	  nil
+	file-name))))
 
 ;; Todays file functionality
+(setq brnm-daily-mode-map (make-sparse-keymap))
+(with-eval-after-load 'evil
+  (define-key brnm-daily-mode-map (kbd "M-n") #'daily-find-next-note)
+  (define-key brnm-daily-mode-map (kbd "M-p") #'daily-find-previous-note))
+(define-minor-mode brnm-daily-mode
+  "Defines a keymap for interacting and modifying pdf hyperlinks with simple commands.")
+
+
 (defun my-find-daily-file ()
   "Gets today's date using shell's date command,
      getting shell's output buffers content,
@@ -59,7 +70,8 @@
        (file-name (daily-find-file-name today-date)))
     (if (not file-name) ;; Não encontrou arquivo nenhum
 	(setq file-name (concat my-daily-folder "/" today-date ".org")))
-    (find-file file-name)))
+    (find-file file-name)
+    (brnm-daily-mode 1)))
 (defalias 'mfdf 'my-find-daily-file)
 
 ;; movement
@@ -75,7 +87,8 @@
       (setq count-previous (+ 1 count-previous)))
     (if previous-note-name
 	(find-file previous-note-name)
-      (message "No previous note"))))
+      (message "No previous note"))
+    (brnm-daily-mode 1)))
 
 (defun daily-find-next-note ()
   (interactive)
@@ -89,4 +102,5 @@
       (setq count-next (+ 1 count-next)))
     (if next-note-name
 	(find-file next-note-name)
-      (message "No next note"))))
+      (message "No next note"))
+    (brnm-daily-mode 1)))

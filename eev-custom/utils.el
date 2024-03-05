@@ -5,6 +5,15 @@
 
 ;; «pdf»  (to ".pdf")
 
+(defun brnm-delete-first-posspec ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (search-forward "(")
+    (search-forward-regexp "\\ \".+?\"")
+    (delete-region (match-beginning 0) (match-end 0))))
+;; (find-efunctiondescr 'delete-region)
+
 (defun brnm-toggle-page-text ()
   (interactive)
   (save-excursion
@@ -22,6 +31,8 @@
   (interactive)
   (save-excursion
     (beginning-of-line)
+    (search-forward "(")
+    (search-forward " ")
     (search-forward-regexp "-?[0-9]+")
     (let (number)
       (setq number (string-to-number (match-string 0)))
@@ -32,6 +43,8 @@
   (interactive)
   (save-excursion
     (beginning-of-line)
+    (search-forward "(")
+    (search-forward " ")
     (search-forward-regexp "-?[0-9]+")
     (let (number)
       (setq number (string-to-number (match-string 0)))
@@ -48,7 +61,13 @@
 (with-eval-after-load 'evil
   (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-b") #'brnm-toggle-page-text)
   (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-n") #'brnm-increase-page-number)
-  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-p") #'brnm-decrease-page-number))
+  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-p") #'brnm-decrease-page-number)
+  (evil-define-key '(normal insert) page-utils-mode-map (kbd "M-d") #'brnm-delete-first-posspec))
+
+(define-key page-utils-mode-map (kbd "M-b") #'brnm-toggle-page-text)
+(define-key page-utils-mode-map (kbd "M-n") #'brnm-increase-page-number)
+(define-key page-utils-mode-map (kbd "M-p") #'brnm-decrease-page-number)
+(define-key page-utils-mode-map (kbd "M-d") #'brnm-delete-first-posspec)
 
 (define-minor-mode page-utils-mode
   "Defines a keymap for interacting and modifying pdf hyperlinks with simple commands.")

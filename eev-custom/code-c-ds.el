@@ -6,6 +6,13 @@
     (apply 'find-fline (ee-{c}file str) (cons (upcase (car pos-spec-list)) (cdr pos-spec-list))))
 ") (ee-code-c-d-rest c d rest)))
 
+(defun ee-code-c-d-:defun (c d &rest rest)
+  (concat (ee-template0 "
+    (defun find-{c}defun (str &rest pos-spec-list)
+    (interactive (list \"\"))
+    (apply 'find-fline (ee-{c}file str) (cons (concat \"defun \" (car pos-spec-list)) (cdr pos-spec-list))))
+") (ee-code-c-d-rest c d rest)))
+
 ;; (find-eevfile "eev-code.el" "(defun ee-code-c-d-base (c d)")
 (defun ee-code-c-d-base (c d)
   (ee-template0 "\
@@ -40,7 +47,7 @@
 
 (code-c-d "~" "~/" :caps)
 (code-c-d "notes" "~/notes/" :caps)
-(code-c-d "daily" "~/notes/daily/" :caps)
+(code-c-d "daily" "~/notes/daily/" :caps :anchor)
 
 
 (code-c-d "p" "~/p/")
@@ -62,7 +69,7 @@
 (code-c-d "soilc" "~/p/odecamsoil/src/components/" :caps)
 
 
-(code-c-d "meta" "~/.config/emacs/meta/" :caps)
+(code-c-d "meta" "~/.config/emacs/meta/" :caps :defun :anchor)
 (code-c-d "eevc" "~/.config/emacs/eev-custom/" :caps)
 (code-c-d "config" "~/.config/emacs/" :caps)
 
