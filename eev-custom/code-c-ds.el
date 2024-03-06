@@ -67,6 +67,7 @@
 
 (code-c-d "soil" "~/p/odecamsoil/" :caps)
 (code-c-d "soilc" "~/p/odecamsoil/src/components/" :caps)
+(code-c-d "0soilc" "~/p/odecamsoil/src/components/" :caps)
 
 
 (code-c-d "meta" "~/.config/emacs/meta/" :caps :defun :anchor)

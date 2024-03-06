@@ -46,6 +46,15 @@
 ;; Query variables
 
 
+;; 7. Ajustando algumas coisas no soil
+(find-soilfile "")
+(find-soilcfile "headerLayout.js")
+(find-soilfile "src/pages/projects.js")
+(find-soilfile "src/pages/{MarkdownRemark.frontmatter__slug}.js")
+
+
+
+
 
 
 
