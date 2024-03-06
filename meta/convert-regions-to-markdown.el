@@ -81,7 +81,7 @@
   (save-window-excursion
     (eval (read text))
     (concat
-     "[Region on original file](" (crtm-get-github-link-to-region) ")\n"
+     (crtm-get-github-link-to-region) ")\n"
      "``` "
      (cdr (assoc major-mode crtm-major-mode-to-src-block-type))
      "\n"
@@ -96,14 +96,20 @@
 (defun crtm-get-github-link-to-region ()
   ()
   "Will generate a github hyperlink to the region active in the buffer."
-  (concat crtm-remote-repo-url
-	  "blob/"
-	  (_mc-get-last-commit-hash)
-	  "/" 
-	  (file-relative-name (buffer-file-name) (_mc-get-git-root-dir))
-	  "#L" (number-to-string (line-number-at-pos (region-beginning)))
-	  "-L" (number-to-string (line-number-at-pos (region-end)))
-	  ))
+  (concat
+   "[Source: " (file-name-nondirectory (buffer-file-name))
+   " L" (number-to-string (line-number-at-pos (region-beginning)))
+   "-L" (number-to-string (line-number-at-pos (region-end)))
+   "]("
+   crtm-remote-repo-url
+   "blob/"
+   (_mc-get-last-commit-hash)
+   "/" 
+   (file-relative-name (buffer-file-name) (_mc-get-git-root-dir))
+   "#L" (number-to-string (line-number-at-pos (region-beginning)))
+   "-L" (number-to-string (line-number-at-pos (region-end)))
+   ")"
+   ))
   
 ;; (buffer-file-name)
 ;; (_mc-get-git-root-dir)
